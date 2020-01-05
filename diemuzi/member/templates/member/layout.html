@@ -1,0 +1,148 @@
+{% load compress %}
+
+{% load i18n %}
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Start Meta -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- End Meta -->
+
+    <!-- Start Title -->
+    <title>Diemuzi{% block title %}{% endblock %}</title>
+    <!-- End Title -->
+
+    <!-- Start Favicon -->
+    <link rel="icon"
+          type="image/ico"
+          href="{% static 'asset/images/favicon.ico' %}">
+    <!-- End Favicon -->
+
+    <!-- Start Default CSS -->
+    {% compress css %}
+        <link rel="stylesheet"
+              href="{% static 'webpack/vendor-css.css' %}"
+              type="text/css">
+    {% endcompress %}
+
+    {% compress css %}
+        <link rel="stylesheet"
+              href="{% static 'asset/css/diemuzi.css' %}"
+              type="text/css">
+    {% endcompress %}
+
+    {% compress css %}
+        <link rel="stylesheet"
+              href="{% static 'asset/css/bootstrap.css' %}"
+              type="text/css">
+    {% endcompress %}
+    <!-- End Default CSS -->
+
+    <!-- Start Secondary CSS -->
+    {% block css %}{% endblock %}
+    <!-- End Secondary CSS -->
+
+    <!-- Start Google Verification -->
+    <meta name="google-site-verification" content="LGQVEp_7sIUe7uugj4syzMOziyaXE-U7HJejv0Fw1oc"/>
+    <!-- End Google Verification -->
+
+    <!-- Start Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-133453060-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag('config', 'UA-133453060-1');
+    </script>
+    <!-- End Google Analytics -->
+</head>
+
+<body>
+
+{% include 'asset/navbar.html' %}
+
+<!-- Start Wrapper -->
+<div class="container-fluid h-100" id="wrapper">
+    <div class="row h-100">
+        {% include 'member/sidebar.html' %}
+
+        <main class="col-md offset-md-2 py-2  bg-light border-left border-dark">
+            {% include 'asset/flash.html' %}
+
+            <!-- Start Toggle Nav -->
+            <div class="d-md-none mt-3 mb-3">
+                <a href="#" id="toggle_sidebar" class="btn btn-dark">
+                    <span class="fas fa-bars"></span> {% trans 'Toggle Nav' %}
+                </a>
+            </div>
+            <!-- End Toggle Nav -->
+
+            <!-- Start Breadcrumbs -->
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb border border-dark">
+                    <li class="breadcrumb-item">
+                        <i class="fas fa-home"></i> <a href="{% url 'home:index' %}">{% trans 'Home' %}</a>
+                    </li>
+
+                    {% block breadcrumbs %}{% endblock %}
+                </ol>
+            </nav>
+            <!-- End Breadcrumbs -->
+
+            <!-- Start Content -->
+            {% block content %}{% endblock %}
+            <!-- End Content -->
+
+            {% include 'asset/footer.html' %}
+        </main>
+    </div>
+</div>
+<!-- End Wrapper -->
+
+<!-- Start To Top -->
+<a id="back-to-top" href="#" class="btn btn-dark btn-lg back-to-top" role="button"
+   title="{% trans 'Click to return to top page.' %}" data-toggle="tooltip" data-placement="left">
+    <i class="fas fa-angle-up"></i>
+</a>
+<!-- End To Top -->
+
+<!-- Start Default JS -->
+{% compress js %}
+    <script src="{% static 'webpack/vendor.js' %}"></script>
+{% endcompress %}
+
+{% compress js %}
+    <script src="{% static 'asset/js/diemuzi.js' %}"></script>
+{% endcompress %}
+
+{% compress js %}
+    <script src="{% static 'form/js/blockui.js' %}"></script>
+{% endcompress %}
+
+{% compress js %}
+    <script src="{% static 'comment/js/form.js' %}"></script>
+{% endcompress %}
+
+<script>
+    $(document).ready(function () {
+        $(this).scrollTop(0);
+    });
+</script>
+<!-- End Default JS -->
+
+<!-- Start Secondary JS -->
+{% block js %}{% endblock %}
+<!-- End Secondary JS -->
+
+</body>
+</html>

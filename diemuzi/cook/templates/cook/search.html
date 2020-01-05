@@ -1,0 +1,65 @@
+{% extends 'asset/layout.html' %}
+
+{% load compress %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% load template_isimage %}
+
+{% block js %}
+    {% compress js %}
+        <script src="{% static 'form/js/modal.js' %}"></script>
+    {% endcompress %}
+{% endblock %}
+
+{% block title %} : {% trans 'Cook' %} : {% trans 'Search' %}{% endblock %}
+
+{% block content %}
+
+    <div class="container-fluid mt-3">
+        <div class="row">
+            <!-- Start Left Side -->
+            <div class="col-md-8 mb-3">
+
+                <div class="row row-cols-1 row-cols-md-3">
+
+                    {% for item in object_list %}
+                        <div class="col mb-4">
+                            <div class="card">
+                                {% if item.image|template_isimage %}
+                                    <img src="{{ item.image.url }}" alt="{{ item.name|escape }}" class="img-fluid">
+                                {% else %}
+                                    <img src="https://placehold.it/250x190?text=No+Image"
+                                         alt="{{ item.name|escape }}"
+                                         class="img-fluid">
+                                {% endif %}
+
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ item|escape }}</h5>
+
+                                    <a href="{% url 'cook:read' item.slug|escape %}" class="btn btn-outline-secondary">
+                                        &raquo; {% trans 'Try recipe' %}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                </div>
+
+                <!-- Start Pagination -->
+                {% include 'form/search/pagination.html' %}
+                <!-- End Pagination -->
+
+            </div>
+            <!-- End Left Side -->
+
+            <!-- Start Right Side -->
+            {% include 'cook/right_side.html' %}
+            <!-- End Right Side -->
+        </div>
+    </div>
+
+{% endblock %}

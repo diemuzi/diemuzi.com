@@ -1,0 +1,14 @@
+-r prod.txt
+
+# Django Modules
+django-debug-toolbar
+django-extensions
+
+# Other Modules
+coverage
+markdown
+python-coveralls
+pytest
+setuptools
+twine
+wheel

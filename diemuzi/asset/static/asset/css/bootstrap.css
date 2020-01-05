@@ -1,0 +1,37 @@
+/**
+ * Accordian Up/Down Arrows
+ */
+.card-header[data-toggle="collapse"] .fas:after {
+    content: "\f139";
+    right: 10px;
+    position: absolute;
+    top: 15px;
+}
+
+.card-header[aria-expanded="true"] .fas:after {
+    content: "\f13a";
+    right: 10px;
+    position: absolute;
+    top: 15px;
+}
+
+.card-header[data-toggle="collapse"].collapsed .fas:after {
+    content: "\f139";
+    right: 10px;
+    position: absolute;
+    top: 15px;
+}
+
+/**
+ * Table Borders
+ */
+.table-bordered {
+    border: 1px solid #343a40 !important;
+}
+
+.table-bordered th,
+.table-bordered td,
+.table-bordered thead th,
+.table-bordered thead td {
+    border: 1px solid #343a40;
+}

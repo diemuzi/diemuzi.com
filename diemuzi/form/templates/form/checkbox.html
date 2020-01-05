@@ -1,0 +1,27 @@
+{% load widget_tweaks %}
+
+<div class="form-group custom-control custom-checkbox" id="checkbox_{{ checkbox.name }}">
+    {% if checkbox.errors %}
+        {% render_field checkbox class="is-invalid custom-control-input" %}
+    {% else %}
+        {% if checkbox.data %}
+            {% render_field checkbox class="is-valid custom-control-input" %}
+        {% else %}
+            {% render_field checkbox class="custom-control-input" %}
+        {% endif %}
+    {% endif %}
+
+    {{ checkbox|add_label_class:'font-weight-bold custom-control-label'|cut:":" }}
+
+    {% if checkbox.errors %}
+        {% for error in checkbox.errors %}
+            <div class="invalid-feedback">
+                {{ error }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    {% if checkbox.help_text %}
+        <small class="form-text text-muted help-text">{{ checkbox.help_text }}</small>
+    {% endif %}
+</div>

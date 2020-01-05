@@ -1,0 +1,150 @@
+{% load i18n %}
+
+<!-- Start Left Side Nav -->
+<div class="col-md-2 p-0 d-none d-md-block" id="sidebar">
+    <div class="accordion" id="accordionSideBar">
+        <!-- Start Account -->
+        <div class="card rounded-0 border-right-0">
+            <div class="card-header btn text-left" id="headingSideBarOne" data-toggle="collapse"
+                 data-target="#collapseSideBarOne" aria-expanded="false" aria-controls="collapseSideBarOne">
+                <i class="fas fa-cog"></i> {% trans 'Account' %}
+            </div>
+
+            <div id="collapseSideBarOne" class="collapse" aria-labelledby="headingSideBarOne"
+                 data-parent="#accordionSideBar">
+
+                <div class="list-group list-group-flush border-top">
+                    {% if perms.login.view_accesslog %}
+                        <a href="{% url 'login:access' %}" class="list-group-item list-group-item-action">
+                            &raquo; {% trans 'Access Logs' %}
+                        </a>
+                    {% endif %}
+
+                    {% if perms.login.view_password %}
+                        <a href="{% url 'login:password' %}" class="list-group-item list-group-item-action">
+                            &raquo; {% trans 'Change Password' %}
+                        </a>
+                    {% endif %}
+
+                    {% if perms.login.view_account %}
+                        <a href="{% url 'login:profile' %}" class="list-group-item list-group-item-action">
+                            &raquo; {% trans 'Profile' %}
+                        </a>
+                    {% endif %}
+
+                    {% if perms.login.delete_account %}
+                        <a href="{% url 'login:delete' %}" class="list-group-item list-group-item-action">
+                            &raquo; {% trans 'Remove Account' %}
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <!-- End Account -->
+
+        {% if perms.blog.view_blog %}
+            <!-- Start Blog -->
+            <div class="card rounded-0 border-right-0">
+                <div class="card-header btn text-left" id="headingSideBarTwo" data-toggle="collapse"
+                     data-target="#collapseSideBarTwo" aria-expanded="false" aria-controls="collapseSideBarTwo">
+                    <i class="fas fa-blog"></i> {% trans 'Blog' %}
+                </div>
+
+                <div id="collapseSideBarTwo" class="collapse" aria-labelledby="headingSideBarTwo"
+                     data-parent="#accordionSideBar">
+
+                    <div class="list-group list-group-flush border-top">
+                        {% if perms.blog.view_category %}
+                            <a href="{% url 'blog:admin-search-category' %}"
+                               class="list-group-item list-group-item-action">
+                                &raquo; {% trans 'Categories' %}
+                            </a>
+                        {% endif %}
+
+                        {% if perms.blog.view_blog %}
+                            <a href="{% url 'blog:admin-search' %}" class="list-group-item list-group-item-action">
+                                &raquo; {% trans 'Search' %}
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <!-- End Blog -->
+        {% endif %}
+
+        {% if perms.cook.view_cook %}
+            <!-- Start Cooking -->
+            <div class="card rounded-0 border-right-0">
+                <div class="card-header btn text-left" id="headingSideBarThree" data-toggle="collapse"
+                     data-target="#collapseSideBarThree" aria-expanded="false" aria-controls="collapseSideBarThree">
+                    <i class="fas fa-utensils"></i> {% trans 'Cooking' %}
+                </div>
+
+                <div id="collapseSideBarThree" class="collapse" aria-labelledby="headingSideBarThree"
+                     data-parent="#accordionSideBar">
+
+                    <div class="list-group list-group-flush border-top">
+                        {% if perms.cook.view_category %}
+                            <a href="{% url 'cook:admin-search-category' %}"
+                               class="list-group-item list-group-item-action">
+                                &raquo; {% trans 'Categories' %}
+                            </a>
+                        {% endif %}
+
+                        {% if perms.cook.view_cook %}
+                            <a href="{% url 'cook:admin-search' %}" class="list-group-item list-group-item-action">
+                                &raquo; {% trans 'Search' %}
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <!-- End Cooking -->
+        {% endif %}
+
+        {% if perms.photo.view_photo %}
+            <!-- Start Photo -->
+            <div class="card rounded-0 border-right-0">
+                <div class="card-header btn text-left" id="headingSideBarFour" data-toggle="collapse"
+                     data-target="#collapseSideBarFour" aria-expanded="false" aria-controls="collapseSideBarFour">
+                    <i class="fas fa-photo-video"></i> {% trans 'Photography' %}
+                </div>
+
+                <div id="collapseSideBarFour" class="collapse" aria-labelledby="headingSideBarFour"
+                     data-parent="#accordionSideBar">
+
+                    <div class="list-group list-group-flush border-top">
+                        {% if perms.login.view_accesslog %}
+                            <a href="#" class="list-group-item list-group-item-action" aria-disabled="true">
+                                &raquo; {% trans 'Coming Soon' %}
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <!-- End Photo -->
+        {% endif %}
+
+        {% if user.is_superuser %}
+            <!-- Start User -->
+            <div class="card rounded-0 border-right-0">
+                <div class="card-header btn text-left" id="headingSideBarFive" data-toggle="collapse"
+                     data-target="#collapseSideBarFive" aria-expanded="false" aria-controls="collapseSideBarFive">
+                    <i class="fas fa-user-cog"></i> {% trans 'User Admin' %}
+                </div>
+
+                <div id="collapseSideBarFive" class="collapse" aria-labelledby="headingSideBarFive"
+                     data-parent="#accordionSideBar">
+
+                    <div class="list-group list-group-flush border-top">
+                        <a href="#" class="list-group-item list-group-item-action" aria-disabled="true">
+                            &raquo; {% trans 'Coming Soon' %}
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- End User -->
+        {% endif %}
+    </div>
+</div>
+<!-- End Left Side Nav -->

@@ -1,0 +1,1 @@
+sitemap: http://diemuzi.com/sitemap.xml

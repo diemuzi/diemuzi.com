@@ -1,0 +1,24 @@
+{% extends 'member/layout.html' %}
+
+{% load i18n %}
+
+{% block breadcrumbs %}
+    {% include 'member/breadcrumbs.html' %}
+{% endblock %}
+
+{% block title %} : {% trans 'Members Area' %}{% endblock %}
+
+{% block content %}
+
+    <div class="d-flex p-2 mt-2 bg-white border">
+        {% blocktrans %}Welcome to the members area, {{ user }}.{% endblocktrans %}
+    </div>
+
+    <div class="d-flex p-2 mt-2 bg-white border">
+        {% url 'contact:index' as contact_us %}
+
+        {% blocktrans %}We will be adding new features in the near future, so check back often. We are also looking for
+            any type of <a href="{{ contact_us }}" class="pl-1">feedback</a>.{% endblocktrans %}
+    </div>
+
+{% endblock %}

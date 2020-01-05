@@ -1,0 +1,38 @@
+{% extends 'asset/layout.html' %}
+
+{% load i18n %}
+
+{% block title %} : {% trans 'Privacy Policy' %}{% endblock %}
+
+{% block content %}
+
+    <div class="card border-dark col-lg-4 m-auto">
+        <div class="card-body">
+            <div class="p-2">
+                {% blocktrans %}I am going to keep this as simple as possible to understand.{% endblocktrans %}
+            </div>
+
+            <div class="p-2">
+                {% blocktrans %}I have no use for your data beyond using it for this website only. You have the ability
+                    to login to your account at any time and remove your account and all of its
+                    data.{% endblocktrans %}
+            </div>
+
+            <div class="p-2">
+                {% blocktrans %}I use
+                    <a href="https://marketingplatform.google.com/about/analytics/" target="_blank">Google Analytics</a>
+                    to see
+                    which pages are getting the most attention so I can better understand what content my views are
+                    enjoying and want more of.{% endblocktrans %}
+            </div>
+
+            <div class="p-2">
+                {% url 'contact:index' as contact_us %}
+
+                {% blocktrans %}If anything is not clear, please <a href="{{ contact_us }}">contact us</a> and express
+                    your concerns and I'll do my best to find a proper solution for you.{% endblocktrans %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

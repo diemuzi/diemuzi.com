@@ -1,0 +1,29 @@
+{% load i18n %}
+
+<!-- Start Footer -->
+<footer class="py-3">
+    <div class="nav justify-content-center">
+        <div class="nav-item">
+            <a class="nav-link text-dark" href="{% url 'home:privacy' %}">
+                <i class="fas fa-user-lock"></i> {% trans 'Privacy Policy' %}
+            </a>
+        </div>
+
+        <div class="nav-item">
+            <a class="nav-link text-dark" href="{% url 'home:faq' %}">
+                <i class="fas fa-question-circle"></i> {% trans 'FAQ' %}
+            </a>
+        </div>
+
+        <div class="nav-item">
+            <a class="nav-link text-dark" href="{% url 'sitemap' %}">
+                <i class="fas fa-sitemap"></i> {% trans 'Sitemap' %}
+            </a>
+        </div>
+    </div>
+
+    <div class="text-center mt-3">
+        &copy; {% now 'Y' %} <a href="https://diemuzi.com" target="_blank">diemuzi.com</a>
+    </div>
+</footer>
+<!-- End Footer -->

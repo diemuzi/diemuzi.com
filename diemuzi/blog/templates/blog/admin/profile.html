@@ -1,0 +1,50 @@
+{% extends 'member/layout.html' %}
+
+{% load compress %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% block breadcrumbs %}
+    {% include 'blog/admin/breadcrumbs.html' with pk=object.pk %}
+{% endblock %}
+
+{% block js %}
+    {% if not perms.blog.change_blog %}
+        {% compress js %}
+            <script src="{% static 'form/js/disableForm.js' %}"></script>
+        {% endcompress %}
+    {% endif %}
+{% endblock %}
+
+{% block title %} : {% trans 'Blog Admin' %} : {% trans 'Profile' %}{% endblock %}
+
+{% block content %}
+
+    <form action="{% url 'blog:admin-profile' object.pk %}" method="post" novalidate>
+
+        {% csrf_token %}
+
+        <div class="card border-dark">
+            <div class="card-body">
+                <div class="p-2">
+                    {% include 'form/input.html' with input=form.name is_required=True %}
+                    {% include 'form/select.html' with select=form.category is_required=True %}
+                    {% include 'form/input.html' with input=form.keyword is_required=True %}
+                    {% include 'form/input.html' with input=form.video_url %}
+                    {% include 'form/textarea.html' with textarea=form.entry is_required=True %}
+                    {% include 'form/switch.html' with switch=form.is_featured %}
+
+                    {% if perms.blog.change_blog %}
+                        <button type="submit" class="btn btn-outline-secondary">
+                            {% trans 'Update' %}
+                        </button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+{% endblock %}

@@ -1,0 +1,60 @@
+{% load i18n %}
+
+<div class="row justify-content-center mt-3">
+    <div class="col-10">
+        {% if user.is_authenticated %}
+            {% if perms.comment.view_comment and perms.comment.add_comment %}
+                <div class="border border-secondary p-3 mb-3">
+                    <div class="row">
+                        <div class="d-flex font-weight-bold ml-3">
+                            {% trans 'Comments' %}: {{ object.comments.count }}
+                        </div>
+
+                        <div class="d-flex ml-auto mr-3">
+                            <a href="#" data-toggle="modal" data-target="#commentModal" id="commentOpen">
+                                <i class="far fa-comments"></i> {% trans 'Leave a comment' %}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="card mb-4 border-danger">
+                    <div class="card-body">
+                        {% trans 'You currently are not allowed to post comments.' %}
+                    </div>
+                </div>
+            {% endif %}
+        {% else %}
+            <div class="card mb-4 border-danger">
+                <div class="card-body">
+                    You must <a href="{% url 'login:login' %}?next={{ request.path|urlencode }}">login</a> to add
+                    a comment.
+                </div>
+            </div>
+        {% endif %}
+
+        <ul class="list-group">
+            {% for item in object.comments %}
+                {% if item.is_active %}
+                    <div class="media mb-4">
+                        <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+
+                        <div class="media-body">
+                            <h6 class="mt-0 font-weight-bold">
+                                {% if item.show_name %}
+                                    {{ item.made_by.first_name|escape }} {{ item.made_by.last_name|escape }}
+                                {% else %}
+                                    {% trans 'Anonymous Cat' %}
+                                {% endif %}
+                            </h6>
+
+                            <div class="text-muted small">{{ item.date_from|date:"Y-m-d H:i:s" }}</div>
+
+                            <div class="mt-1">{{ item.comment|escape }}</div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+</div>

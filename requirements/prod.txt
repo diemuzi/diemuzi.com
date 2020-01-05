@@ -1,0 +1,33 @@
+# Django Modules
+django
+django-cleanup
+django-compressor
+django-filter
+django-ipware
+django-model-utils
+django-split-settings
+django-widget-tweaks
+
+# Other Modules
+argon2-cffi
+pillow
+psycopg2
+python-dateutil
+python-memcached
+python-twitter
+pytz
+pyyaml
+requests
+validators
+xlsxwriter
+
+# Custom
+#git+http://github.com/gwhcp/comment.git#egg=gwhcp-contrib-comment
+#git+http://github.com/gwhcp/database.git#egg=gwhcp-contrib-database
+#git+http://github.com/gwhcp/form.git#egg=gwhcp-contrib-form
+#git+http://github.com/gwhcp/locality.git#egg=gwhcp-contrib-locality
+#git+http://github.com/gwhcp/template.git#egg=gwhcp-contrib-template
+#git+http://github.com/gwhcp/utils.git#egg=gwhcp-contrib-utils
+
+# Temporary Fixes
+-e git+http://github.com/django-compressor/django-compressor.git@a5bfd775450428e1a261b88e1e5424bfb4dde081#egg=django_compressor

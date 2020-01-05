@@ -1,0 +1,17 @@
+{% load i18n %}
+
+<!-- Start Flash Messenger -->
+{% if messages %}
+    {% for message in messages %}
+        <div class="col-lg-12 alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show d-print-none mt-2"
+             role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="{% trans 'Close' %}">
+
+                <span aria-hidden="true">&times;</span>
+            </button>
+
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+<!-- End Flash Messenger -->

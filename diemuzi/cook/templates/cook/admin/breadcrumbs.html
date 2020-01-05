@@ -1,0 +1,60 @@
+{% load i18n %}
+
+<li class="breadcrumb-item dropdown">
+    <i class="fas fa-utensils"></i>
+
+    <a href="#" id="breadcrumbMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+       class="dropdown-toggle">{% trans 'Cooking Admin' %}</a>
+
+    <div class="dropdown-menu" aria-labelledby="breadcrumbMenuLink">
+        {% if perms.cook.view_cook %}
+            {% if perms.cook.add_cook and request.resolver_match.url_name == 'admin-add' %}
+                <a class="dropdown-item" href="{% url 'cook:admin-add' %}">
+                    <i class="fas fa-plus-circle"></i> {% trans 'Create' %}
+                </a>
+            {% endif %}
+
+            {% if perms.cook.add_category and request.resolver_match.url_name == 'admin-add-category' %}
+                <a class="dropdown-item" href="{% url 'cook:admin-add-category' %}">
+                    <i class="fas fa-plus-circle"></i> {% trans 'Create Category' %}
+                </a>
+            {% endif %}
+
+            {% if pk is not None %}
+                <a class="dropdown-item" href="{% url 'cook:admin-profile' pk %}">
+                    <i class="fas fa-pencil-alt"></i> {% trans 'Profile' %}
+                </a>
+            {% endif %}
+
+            <a class="dropdown-item" href="{% url 'cook:admin-search' %}">
+                <i class="fas fa-search"></i> {% trans 'Search' %}
+            </a>
+
+            <a class="dropdown-item" href="{% url 'cook:admin-search-category' %}">
+                <i class="fas fa-search"></i> {% trans 'Search Categories' %}
+            </a>
+        {% endif %}
+    </div>
+</li>
+
+<li class="breadcrumb-item" id="breadcrumbTitle">
+    {% if request.resolver_match.url_name == 'admin-add' %}
+        <i class="fas fa-plus-circle"></i> {% trans 'Create' %}
+    {% endif %}
+
+    {% if request.resolver_match.url_name == 'admin-add-category' %}
+        <i class="fas fa-plus-circle"></i> {% trans 'Create Category' %}
+    {% endif %}
+
+    {% if request.resolver_match.url_name == 'admin-profile' %}
+        <i class="fas fa-pencil-alt"></i> {% trans 'Profile' %}
+    {% endif %}
+
+    {% if request.resolver_match.url_name == 'admin-search' %}
+        <i class="fas fa-search"></i> {% trans 'Search' %}
+    {% endif %}
+
+    {% if request.resolver_match.url_name == 'admin-search-category' %}
+        <i class="fas fa-search"></i> {% trans 'Search Categories' %}
+    {% endif %}
+</li>

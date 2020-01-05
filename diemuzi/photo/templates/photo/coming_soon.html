@@ -1,0 +1,26 @@
+{% extends 'asset/layout.html' %}
+
+{% load i18n %}
+
+{% block title %} : {% trans 'Photography' %} : {% trans 'Coming Soon' %}{% endblock %}
+
+{% block content %}
+
+    <div class="col-lg-4 ml-auto mr-auto pt-5">
+        <div class="card mb-3">
+            <div class="card-header bg-dark text-white">{% trans 'Coming Soon' %}</div>
+
+            <div class="card-body">
+                <p class="card-text">
+                    {% blocktrans %}We are working on our image collection and will have something here
+                        soon!{% endblocktrans %}</p>
+
+                <p class="card-text">
+                    <a class="btn btn-outline-secondary" href="{% url 'home:index' %}"
+                       role="button">{% trans 'Back Home' %}</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

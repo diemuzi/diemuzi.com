@@ -1,0 +1,82 @@
+{% extends 'asset/layout.html' %}
+
+{% load compress %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% block css %}
+    {% compress css %}
+        <link rel="stylesheet"
+              href="{% static 'home/css/home.css' %}"
+              type="text/css">
+    {% endcompress %}
+{% endblock %}
+
+{% block content %}
+
+    <div class="container marketing">
+        <!-- Start Three Columns -->
+        <div class="row">
+            <!-- Start Blog -->
+            <div class="col-lg-4">
+                <a href="{% url 'blog:index' %}">
+                    <img src="{% static 'blog/images/cat_sulky.png' %}" alt="{% trans 'Blog' %}">
+                </a>
+
+                <h2>{% trans 'Blog' %}</h2>
+
+                <p class="text-md-left">{% blocktrans %}It seems like I am always doing something random. Thanks for
+                    checking in and I hope you find something interesting and/or useful to your
+                    life.{% endblocktrans %}</p>
+
+                <p class="mt-5">
+                    <a class="btn btn-secondary" href="{% url 'blog:index' %}"
+                       role="button">&raquo; {% trans 'Read more' %}</a>
+                </p>
+            </div>
+            <!-- End Blog -->
+
+            <!-- Start Cooking -->
+            <div class="col-lg-4">
+                <a href="{% url 'cook:index' %}">
+                    <img src="{% static 'cook/images/cat_cart.png' %}" alt="{% trans 'Cooking' %}">
+                </a>
+
+                <h2>{% trans 'Cooking' %}</h2>
+
+                <p class="text-md-left">{% blocktrans %}I've always had a passion for cooking, just not on a
+                    professional level. I'll share with you many of the recipies I find enjoyable and hope you'll try
+                    them out and perhaps even find a few you really like too.{% endblocktrans %}</p>
+
+                <p class="mt-4">
+                    <a class="btn btn-secondary" href="{% url 'cook:index' %}"
+                       role="button">&raquo; {% trans 'Read more' %}</a>
+                </p>
+            </div>
+            <!-- End Cooking -->
+
+            <!-- Start Photography -->
+            <div class="col-lg-4">
+                <a href="{% url 'photo:index' %}">
+                    <img src="{% static 'photo/images/shadow_fly.png' %}" alt="{% trans 'Photography' %}">
+                </a>
+
+                <h2>{% trans 'Photography' %}</h2>
+
+                <p class="text-md-left">{% blocktrans %}Words can only do so little, so why not actually see what goes
+                    on around here. I hope this will bring all of you to a new understanding and value of life.
+                    A vision that inspires you to live and love.{% endblocktrans %}</p>
+
+                <p class="mt-4">
+                    <a class="btn btn-secondary" href="{% url 'photo:index' %}"
+                       role="button">&raquo; {% trans 'Read more' %}</a>
+                </p>
+            </div>
+            <!-- End Photography -->
+        </div>
+        <!-- End Three Columns -->
+    </div>
+
+{% endblock %}

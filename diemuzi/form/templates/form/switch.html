@@ -1,0 +1,27 @@
+{% load widget_tweaks %}
+
+<div class="form-group custom-control custom-switch" id="switch_{{ switch.name }}">
+    {% if switch.errors %}
+        {% render_field switch class="custom-control-input is-invalid" %}
+    {% else %}
+        {% if switch.data %}
+            {% render_field switch class="custom-control-input is-valid" %}
+        {% else %}
+            {% render_field switch class="custom-control-input" %}
+        {% endif %}
+    {% endif %}
+
+    {{ switch|add_label_class:'custom-control-label'|cut:":" }}
+
+    {% if switch.errors %}
+        {% for error in switch.errors %}
+            <div class="invalid-feedback">
+                {{ error }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    {% if switch.help_text %}
+        <small class="form-text text-muted help-text">{{ switch.help_text }}</small>
+    {% endif %}
+</div>

@@ -1,0 +1,159 @@
+{% extends 'asset/layout.html' %}
+
+{% load compress %}
+
+{% load cook_directions %}
+
+{% load cook_ingredients %}
+
+{% load cook_page_span %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% load template_isdefined %}
+
+{% load template_isimage %}
+
+{% block js %}
+    {% compress js %}
+        <script src="{% static 'form/js/modal.js' %}"></script>
+    {% endcompress %}
+{% endblock %}
+
+{% block meta_description %}{{ object.name|escape }}{% endblock %}
+
+{% block meta_keyword %}{{ object.keyword|escape }}{% endblock %}
+
+{% block title %} : {% trans 'Featured Cooking Recipe' %} : {{ object.name|escape }}{% endblock %}
+
+{% block content %}
+
+    <div class="container-fluid mt-3">
+        <div class="row">
+            <!-- Start Left Side -->
+            <div class="col-md-8">
+                <div class="d-flex justify-content-center">
+                    <h2 class="font-weight-bold">{{ object.name|escape }}</h2>
+                </div>
+
+                <div class="d-flex justify-content-center text-muted font-italic">
+                    {% trans 'Posted on' %} {{ object.date_from|date:"Y-m-d H:i:s" }}
+                </div>
+
+                {% if object.video_url|template_isdefined %}
+                    <hr class="w-50 bg-dark">
+
+                    <div class="d-flex justify-content-center">
+                        <div class="embed-responsive embed-responsive-16by9 w-75">
+                            <iframe class="embed-responsive-item" src="{{ object.video_url|escape }}"></iframe>
+                        </div>
+                    </div>
+                {% endif %}
+
+                <hr class="w-50 bg-dark">
+
+                <div class="d-flex justify-content-center">
+                    {% if object.image|template_isimage %}
+                        <img src="{{ object.image.url }}" alt="{{ object.name|escape }}"
+                             class="img-fluid img-thumbnail" style="max-width: 450px; max-height: 450px;">
+                    {% else %}
+                        <img src="https://placehold.it/450x250?text=Coming+Soon" alt="{{ object.name|escape }}"
+                             class="img-fluid">
+                    {% endif %}
+                </div>
+
+                <hr class="w-50 bg-dark">
+
+                <div class="row justify-content-center">
+                    <div class="col-10">{{ object.description|safe }}</div>
+                </div>
+
+                <div class="row justify-content-center mt-3">
+                        <div class="col-md-5 mb-3">
+                            <div class="card border-0">
+                                <div class="card-header bg-dark text-white"><i
+                                        class="fas fa-directions"></i> {% trans 'Directions' %}</div>
+
+                                <div class="card-body">
+                                    {% cook_directions object as directions %}
+
+                                    {% for item in directions %}
+                                        <div class="media">
+                                            <div class="align-self-start mr-3 badge badge-dark">{{ forloop.counter }}</div>
+
+                                            <div class="media-body">
+                                                <p>{{ item|escape }}</p>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-5 mb-3">
+                            <ul class="list-group">
+                                <li class="list-group-item bg-dark text-white">
+                                    <i class="fas fa-shopping-cart"></i> {% trans 'Ingredients' %}
+                                </li>
+
+                                {% cook_ingredients object as ingredients %}
+
+                                {% for item in ingredients %}
+                                    <li class="list-group-item list-group-item-action">{{ item|escape }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                </div>
+
+                <!-- Start Previous/Next Recipe Buttons -->
+                <div class="row justify-content-center mt-3 d-print-none">
+                    <div class="col-5 text-left">
+                        {% cook_previous object as previous %}
+
+                        {% if previous|template_isdefined %}
+                            <a href="{% url 'cook:read' previous.slug %}"
+                               class="btn btn-outline-secondary">&laquo; {% trans 'Previous Recipe' %}</a>
+                        {% endif %}
+                    </div>
+
+                    <div class="col-5 text-right">
+                        {% cook_next object as next %}
+
+                        {% if next|template_isdefined %}
+                            <a href="{% url 'cook:read' next.slug %}"
+                               class="btn btn-outline-secondary">{% trans 'Next Recipe' %} &raquo;</a>
+                        {% endif %}
+                    </div>
+                </div>
+                <!-- End Previous/Next Recipe Buttons -->
+
+                <!-- Start Tags -->
+                <div class="d-flex flex-row justify-content-center mt-3 d-print-none">
+                    <div class="p-2 mt-2 font-weight-bold">{% trans 'Tags' %}:</div>
+
+                    {% for item in object.keywords %}
+                        <div class="p-2">
+                            <a class="nav-link bg-danger text-white rounded-pill"
+                               href="{% url 'cook:search' keyword=item|urlencode %}">{{ item|escape }}</a>
+                        </div>
+                    {% endfor %}
+                </div>
+                <!-- End Tags -->
+
+                <!-- Start Comments -->
+                {% include 'comment/comments.html' %}
+                <!-- End Comments -->
+            </div>
+            <!-- End Left Side -->
+
+            <!-- Start Right Side -->
+            {% include 'cook/right_side.html' %}
+            <!-- End Right Side -->
+        </div>
+    </div>
+
+    {% include 'comment/comment_modal.html' with object=object %}
+
+{% endblock %}

@@ -1,0 +1,55 @@
+{% load widget_tweaks %}
+
+{% if not request.user.form_display or request.user.form_display == 'expand' %}
+    <div class="form-group{% if is_required %} required{% endif %}" id="select_{{ select.name }}">
+        {{ select|add_label_class:'font-weight-bold'|cut:":" }}
+
+        {% if select.errors %}
+            {% render_field select class="form-control is-invalid" %}
+
+            {% for error in select.errors %}
+                <div class="invalid-feedback">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        {% else %}
+            {% if select.data %}
+                {% render_field select class="form-control is-valid" %}
+            {% else %}
+                {% render_field select class="form-control" %}
+            {% endif %}
+        {% endif %}
+
+        {% if select.help_text and request.user.help_text %}
+            <small class="form-text text-muted">{{ select.help_text }}</small>
+        {% endif %}
+    </div>
+{% endif %}
+
+{% if request.user.form_display == 'compact' %}
+    <div class="input-group{% if not request.user.help_text or not select.help_text %} mb-3{% endif %}" id="select_{{ select.name }}">
+        <div class="input-group-prepend required">
+            {{ select|add_label_class:'input-group-text font-weight-bold'|cut:":" }}
+        </div>
+
+        {% if select.errors %}
+            {% render_field select class="custom-select is-invalid" %}
+
+            {% for error in select.errors %}
+                <div class="invalid-feedback">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        {% else %}
+            {% if select.data %}
+                {% render_field select class="custom-select is-valid" %}
+            {% else %}
+                {% render_field select class="custom-select" %}
+            {% endif %}
+        {% endif %}
+    </div>
+
+    {% if select.help_text and request.user.help_text %}
+        <small class="form-text text-muted mb-3">{{ select.help_text }}</small>
+    {% endif %}
+{% endif %}

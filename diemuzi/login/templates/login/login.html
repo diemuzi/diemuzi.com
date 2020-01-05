@@ -1,0 +1,40 @@
+{% extends 'asset/layout.html' %}
+
+{% load i18n %}
+
+{% block title %} : {% trans 'Login' %}{% endblock %}
+
+{% block content %}
+
+    <form action="{% url 'login:login' %}" method="post" novalidate>
+
+        {% csrf_token %}
+
+        <input type="hidden" name="next" value="{{ next }}">
+
+        <div class="card border-dark col-lg-4 m-auto">
+            <div class="card-body">
+                {% if form.errors %}
+                    <div class="p-2">
+                        <div class="border border-danger p-3 mb-3">
+                            {% trans "Your email address and password didn't match. Please try again." %}
+                        </div>
+                    </div>
+                {% endif %}
+
+                <div class="p-2">
+                    {% include 'form/input.html' with input=form.username is_required=True %}
+                    {% include 'form/password.html' with password=form.password is_required=True %}
+
+                    <button type="submit" class="btn btn-outline-secondary">
+                        {% trans 'Login' %}
+                    </button>
+
+                    <a href="{% url 'password_reset' %}" class="ml-5">{% trans 'Forgot password?' %}</a>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+{% endblock %}

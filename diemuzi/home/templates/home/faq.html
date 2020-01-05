@@ -1,0 +1,47 @@
+{% extends 'asset/layout.html' %}
+
+{% load i18n %}
+
+{% block title %} : {% trans 'Frequently Asked Questions' %}{% endblock %}
+
+{% block content %}
+
+    <div class="accordion" id="accordionFaq">
+        <div class="card">
+            <div class="card-header bg-dark" id="headingOne">
+                <h2 class="mb-0">
+                    <button class="btn btn-link text-white" type="button" data-toggle="collapse"
+                            data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        {% blocktrans %}Why do you need my first and last name?{% endblocktrans %}
+                    </button>
+                </h2>
+            </div>
+
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionFaq">
+                <div class="card-body">
+                    {% blocktrans %}Your first and last name is used when posting a comment on any of our articles. You
+                        can also login to your account and change your settings so that your name will not be displayed
+                        when posting.{% endblocktrans %}
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header bg-dark" id="headingTwo">
+                <h2 class="mb-0">
+                    <button class="btn btn-link text-white collapsed" type="button" data-toggle="collapse"
+                            data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        {% blocktrans %}Will you ever sell any of my information or data?{% endblocktrans %}
+                    </button>
+                </h2>
+            </div>
+
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionFaq">
+                <div class="card-body">
+                    {% blocktrans %}Simply put, <span class="font-weight-bold">no</span>.{% endblocktrans %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

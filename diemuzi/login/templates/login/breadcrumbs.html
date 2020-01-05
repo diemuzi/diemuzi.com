@@ -1,0 +1,46 @@
+{% load i18n %}
+
+<li class="breadcrumb-item dropdown">
+    <i class="fas fa-user-tie"></i>
+
+    <a href="#" id="breadcrumbMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+       class="dropdown-toggle">{% trans 'Login' %}</a>
+
+    <div class="dropdown-menu" aria-labelledby="breadcrumbMenuLink">
+        {% if perms.login.view_accesslog %}
+            <a class="dropdown-item" href="{% url 'login:access' %}">
+                <i class="fas fa-dungeon"></i> {% trans 'Access Logs' %}
+            </a>
+        {% endif %}
+
+        {% if perms.login.view_password %}
+            <a class="dropdown-item" href="{% url 'login:password' %}">
+                <i class="fas fa-key"></i> {% trans 'Change Password' %}
+            </a>
+        {% endif %}
+
+        {% if perms.login.view_account %}
+            <a class="dropdown-item" href="{% url 'login:profile' %}">
+                <i class="fas fa-pencil-alt"></i> {% trans 'Profile' %}
+            </a>
+        {% endif %}
+    </div>
+</li>
+
+<li class="breadcrumb-item" id="breadcrumbTitle">
+    {% if request.resolver_match.url_name == 'access' %}
+        <i class="fas fa-dungeon"></i> {% trans 'Access Logs' %}
+    {% endif %}
+
+    {% if request.resolver_match.url_name == 'delete' %}
+        <i class="fas fa-user-minus"></i> {% trans 'Remove Account' %}
+    {% endif %}
+
+    {% if request.resolver_match.url_name == 'password' %}
+        <i class="fas fa-key"></i> {% trans 'Change Password' %}
+    {% endif %}
+
+    {% if request.resolver_match.url_name == 'profile' %}
+        <i class="fas fa-pencil-alt"></i> {% trans 'Profile' %}
+    {% endif %}
+</li>

@@ -1,0 +1,48 @@
+{% extends 'member/layout.html' %}
+
+{% load compress %}
+
+{% load form_dialog %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% block breadcrumbs %}
+    {% include 'login/breadcrumbs.html' %}
+{% endblock %}
+
+{% block js %}
+    {% compress js %}
+        <script src="{% static 'form/js/modal.js' %}"></script>
+    {% endcompress %}
+{% endblock %}
+
+{% block title %} : {% trans 'Members Area' %} : {% trans 'Remove Account' %}{% endblock %}
+
+{% block content %}
+
+    <div class="d-flex p-2 mt-2 bg-white border">
+        {% blocktrans %}You are about to remove your account. If you choose to continue, all of your associated data
+            will be removed immediately and it cannot be recovered.{% endblocktrans %}
+    </div>
+
+    <div class="d-flex p-2 mt-2 border-0" id="search">
+        <button class="btn btn-danger btn-xs btn-delete m-auto"
+                data-title="{% trans 'Delete' %}"
+                data-url="{% url 'login:delete' %}"
+                id="{{ user.id }}">
+
+            {% trans 'Remove Account' %}
+        </button>
+    </div>
+
+    {% if perms.login.delete_account %}
+        <form action="#" method="post" id="modal_url_delete">
+            {% csrf_token %}
+
+            {% form_dialog _('This is your final warning before you remove your account.') 'delete' %}
+        </form>
+    {% endif %}
+
+{% endblock content %}

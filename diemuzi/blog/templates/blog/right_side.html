@@ -1,0 +1,80 @@
+{% load blog_category %}
+
+{% load i18n %}
+
+{% block css %}
+    <style>
+        [data-toggle="collapse"] .multi-fas.fas:before {
+            content: "\f139";
+        }
+
+        [data-toggle="collapse"].collapsed .multi-fas.fas:before {
+            content: "\f13a";
+        }
+    </style>
+{% endblock %}
+
+<div class="col-md-3">
+    <div class="position-sticky" style="top: 130px;">
+        <!-- Start Navigation -->
+        <div class="card mb-3">
+            <div class="card-header bg-dark text-white">
+                {% trans 'Navigation' %}
+            </div>
+
+            <div class="list-group list-group-flush">
+                <a href="#" class="list-group-item list-group-item-action" data-toggle="modal"
+                   data-target="#searchModal" aria-disabled="true">
+                    <i class="fas fa-search"></i> {% trans 'Search' %}
+                </a>
+
+                <a href="{% url 'blog:index' %}" class="list-group-item list-group-item-action">
+                    <i class="fas fa-star"></i> {% trans 'Featured Article' %}
+                </a>
+
+                {% if request.resolver_match.url_name == 'read' %}
+                    <a href="{% url 'blog:read' blog.slug|urlencode %}"
+                       class="list-group-item list-group-item-action">
+                        <i class="fas fa-book"></i> {% trans 'Read Article' %}
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+        <!-- End Navigation -->
+
+        <!-- Start Categories -->
+        <div class="accordion" id="categoryAccordion">
+            <div class="card mb-3 border">
+                <div class="card-header bg-dark" id="categoryHeading">
+                    <h6 class="text-white" data-toggle="collapse" data-target="#categoryCollapse"
+                        aria-expanded="true" aria-controls="categoryCollapse">
+                        {% trans 'Categories' %} <i class="fas float-right multi-fas"></i>
+                    </h6>
+                </div>
+
+                <div id="categoryCollapse" class="collapse show" aria-labelledby="categoryHeading"
+                     data-parent="#categoryAccordion">
+                    <nav class="nav flex-column list-group list-group-flush">
+                        {% blog_category as categories %}
+
+                        {% for item in categories %}
+                            <a href="{% url 'blog:search' category=item.slug|urlencode %}"
+                               class="nav-link list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                                {{ item.name|escape }}
+
+                                <span class="badge badge-secondary badge-pill">{{ item.count }}</span>
+                            </a>
+                        {% endfor %}
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <!-- End Categories -->
+    </div>
+</div>
+
+<!-- Start Search Modal -->
+<form action="{% url 'blog:search' %}" novalidate id="search_modal">
+    {% include 'form/search/modal.html' %}
+</form>
+<!-- End Search Modal -->

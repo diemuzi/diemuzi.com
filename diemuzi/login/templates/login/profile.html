@@ -1,0 +1,74 @@
+{% extends 'member/layout.html' %}
+
+{% load compress %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% block breadcrumbs %}
+    {% include 'login/breadcrumbs.html' %}
+{% endblock %}
+
+{% block js %}
+    {% if not perms.login.change_account %}
+        {% compress js %}
+            <script src="{% static 'form/js/disableForm.js' %}"></script>
+        {% endcompress %}
+    {% endif %}
+{% endblock %}
+
+{% block title %} : {% trans 'Members Area' %} : {% trans 'Account Profile' %}{% endblock %}
+
+{% block content %}
+
+    <form action="{% url 'login:profile' %}" method="post" novalidate>
+
+        {% csrf_token %}
+
+        <div class="row">
+            <div class="col-lg-6 mb-3">
+                <div class="card border-dark">
+                    <div class="card-body">
+                        <div class="p-2">
+                            <h6 class="font-weight-bold">{% trans 'Account ID' %}</h6>
+                            {{ user.id|escape }}
+                        </div>
+
+                        <div class="p-2">
+                            <h6 class="font-weight-bold">{% trans 'Created Date' %}</h6>
+                            {{ user.date_from|date:request.user.time_format }}
+                        </div>
+
+                        <div class="p-2">
+                            {% include 'form/input.html' with input=form.first_name is_required=True %}
+                            {% include 'form/input.html' with input=form.last_name is_required=True %}
+                            {% include 'form/input.html' with input=form.email is_required=True %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="card border-dark">
+                    <div class="card-body">
+                        {% include 'form/select.html' with select=form.locale is_required=True %}
+                        {% include 'form/select.html' with select=form.time_zone is_required=True %}
+                        {% include 'form/select.html' with select=form.time_format is_required=True %}
+                        {% include 'form/select.html' with select=form.comment_order is_required=True %}
+                        {% include 'form/select.html' with select=form.form_display is_required=True %}
+                        {% include 'form/select.html' with select=form.help_text is_required=True %}
+
+                        {% if perms.login.change_account %}
+                            <button type="submit" class="btn btn-outline-secondary">
+                                {% trans 'Update' %}
+                            </button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+{% endblock content %}

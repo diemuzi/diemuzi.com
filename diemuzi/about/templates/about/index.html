@@ -1,0 +1,59 @@
+{% extends 'asset/layout.html' %}
+
+{% load compress %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% block css %}
+    {% compress css %}
+        <link rel="stylesheet"
+              href="{% static 'about/css/about.css' %}"
+              type="text/css">
+    {% endcompress %}
+{% endblock %}
+
+{% block title %} : {% trans 'About Us' %}{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        <!-- Start Sammie -->
+        <div class="row featurette">
+            <div class="col-md-7">
+                <h2 class="featurette-heading">Sammie S. Taunton</h2>
+
+                <p class="lead">{% blocktrans %}By trade, I am currently an
+                    <a href="https://www.msf-usa.org/" target="_blank">MSF RiderCoach</a> with the State of Florida. In
+                    my free time I split my daily activies between developing opensource software, house/yard upkeep,
+                    and spending as much time with my wife as I possibly can.{% endblocktrans %}
+                </p>
+            </div>
+
+            <div class="col-md-5">
+                <img src="{% static 'about/images/sammie.png' %}" style="max-height: 500px;"
+                     alt="Sammie S. Taunton">
+            </div>
+        </div>
+        <!-- End Sammie -->
+
+        <hr class="featurette-divider">
+
+        <!-- Start Abbey -->
+        <div class="row featurette">
+            <div class="col-md-7 order-md-2">
+                <h2 class="featurette-heading">Abbey "Trey" Taunton</h2>
+
+                <p class="lead">{% blocktrans %}Coming Soon{% endblocktrans %}</p>
+            </div>
+
+            <div class="col-md-5 order-md-1">
+                <img src="{% static 'about/images/abbey.png' %}" style="max-height: 500px;"
+                     alt="Abbey Taunton">
+            </div>
+        </div>
+        <!-- End Abbey -->
+    </div>
+
+{% endblock %}

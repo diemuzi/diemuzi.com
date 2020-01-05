@@ -1,0 +1,10 @@
+__pycache__
+*.egg-info
+.build/
+.dist/
+.idea/
+node_modules/
+package-lock.json
+diemuzi/static/
+diemuzi/media/
+/venv38/

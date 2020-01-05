@@ -1,0 +1,45 @@
+{% extends 'member/layout.html' %}
+
+{% load compress %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% block breadcrumbs %}
+    {% include 'cook/admin/breadcrumbs.html' %}
+{% endblock %}
+
+{% block js %}
+    {% if not perms.cook.add_category %}
+        {% compress js %}
+            <script src="{% static 'form/js/disableForm.js' %}"></script>
+        {% endcompress %}
+    {% endif %}
+{% endblock %}
+
+{% block title %} : {% trans 'Cooking Admin' %} : {% trans 'Create Category' %}{% endblock %}
+
+{% block content %}
+
+    <form action="{% url 'cook:admin-add-category' %}" method="post" novalidate>
+
+        {% csrf_token %}
+
+        <div class="card border-dark">
+            <div class="card-body">
+                <div class="p-2">
+                    {% include 'form/input.html' with input=form.name is_required=True %}
+
+                    {% if perms.cook.add_category %}
+                        <button type="submit" class="btn btn-outline-secondary">
+                            {% trans 'Create' %}
+                        </button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+{% endblock %}

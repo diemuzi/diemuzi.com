@@ -1,0 +1,77 @@
+{% load i18n %}
+
+{% load static %}
+
+<!-- Start Top Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand" href="{% url 'home:index' %}">
+        <h1><img src="{% static 'asset/images/cat-hungry-icon.png' %}" width="72" height="72" alt="The Cat"> <span
+                style="color: #F68634;">D</span>iemuzi</h1>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#TopNavBar"
+            aria-controls="TopNavBar" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-align-justify"></i>
+    </button>
+
+    <div class="collapse navbar-collapse" id="TopNavBar">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item {% if request.resolver_match.namespace == 'home' %}active{% endif %}">
+                <a class="nav-link" href="{% url 'home:index' %}">
+                    <i class="fas fa-home"></i> {% trans 'Home' %}
+                </a>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="TopNavBarDrop2"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-users"></i>
+                    {% if user.is_authenticated %}
+                        {% trans 'Members Area' %}
+                    {% else %}
+                        {% trans 'New / Existing Users' %}
+                    {% endif %}
+                </a>
+
+                <div class="dropdown-menu" aria-labelledby="TopNavBarDrop2">
+                    {% if not user.is_authenticated %}
+                        <a class="dropdown-item" href="{% url 'login:login' %}">
+                            <i class="fas fa-sign-in-alt"></i> {% trans 'Login' %}
+                        </a>
+
+                        <div class="dropdown-divider"></div>
+
+                        <a class="dropdown-item" href="{% url 'login:create' %}">
+                            <i class="fas fa-user-plus"></i> {% trans 'New User' %}
+                        </a>
+                    {% endif %}
+
+                    {% if user.is_authenticated %}
+                        <a class="dropdown-item" href="{% url 'member:index' %}">
+                            <i class="fas fa-tachometer-alt"></i> {% trans 'Dashboard' %}
+                        </a>
+
+                        <div class="dropdown-divider"></div>
+
+                        <a class="dropdown-item" href="{% url 'login:logout' %}">
+                            <i class="fas fa-sign-out-alt"></i> {% trans 'Logout' %}
+                        </a>
+                    {% endif %}
+                </div>
+            </li>
+
+            <li class="nav-item {% if request.resolver_match.namespace == 'about' %}active{% endif %}">
+                <a class="nav-link" href="{% url 'about:index' %}">
+                    <i class="fas fa-cat"></i> {% trans 'About Us' %}
+                </a>
+            </li>
+
+            <li class="nav-item {% if request.resolver_match.namespace == 'contact' %}active{% endif %}">
+                <a class="nav-link" href="{% url 'contact:index' %}">
+                    <i class="fas fa-at"></i> {% trans 'Contact' %}
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<!-- End Top Navigation -->

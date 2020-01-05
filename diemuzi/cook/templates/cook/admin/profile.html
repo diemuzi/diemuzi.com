@@ -1,0 +1,66 @@
+{% extends 'member/layout.html' %}
+
+{% load compress %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% block breadcrumbs %}
+    {% include 'cook/admin/breadcrumbs.html' with pk=object.pk %}
+{% endblock %}
+
+{% block js %}
+    {% if not perms.cook.change_cook %}
+        {% compress js %}
+            <script src="{% static 'form/js/disableForm.js' %}"></script>
+        {% endcompress %}
+    {% endif %}
+{% endblock %}
+
+{% block title %} : {% trans 'Cooking Admin' %} : {% trans 'Profile' %}{% endblock %}
+
+{% block content %}
+
+    <form action="{% url 'cook:admin-profile' object.pk %}" method="post" enctype="multipart/form-data" novalidate>
+
+        {% csrf_token %}
+
+        <div class="row">
+            <div class="col-lg-6 mb-3">
+                <div class="card border-dark">
+                    <div class="card-body">
+                        <div class="p-2">
+                            {% include 'form/input.html' with input=form.name is_required=True %}
+                            {% include 'form/select.html' with select=form.category is_required=True %}
+                            {% include 'form/input.html' with input=form.keyword is_required=True %}
+                            {% include 'form/input.html' with input=form.image is_required=False %}
+                            {% include 'form/textarea.html' with textarea=form.description is_required=True %}
+                            {% include 'form/switch.html' with switch=form.is_featured %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="card border-dark">
+                    <div class="card-body">
+                        {% include 'form/input.html' with input=form.serve is_required=True %}
+                        {% include 'form/input.html' with input=form.time_prep is_required=True %}
+                        {% include 'form/input.html' with input=form.time_cook is_required=True %}
+                        {% include 'form/textarea.html' with textarea=form.ingredients is_required=True %}
+                        {% include 'form/textarea.html' with textarea=form.directions is_required=True %}
+
+                        {% if perms.cook.change_cook %}
+                            <button type="submit" class="btn btn-outline-secondary">
+                                {% trans 'Update' %}
+                            </button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+{% endblock %}

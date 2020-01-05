@@ -1,0 +1,57 @@
+{% load widget_tweaks %}
+
+{% if not request.user.form_display or request.user.form_display == 'expand' %}
+    <div class="form-group{% if is_required %} required{% endif %}" id="input_{{ input.name }}">
+        {{ input|add_label_class:'font-weight-bold'|cut:":" }}
+
+        {% if input.errors %}
+            {% render_field input class="form-control is-invalid" placeholder=input.label %}
+
+            {% for error in input.errors %}
+                <div class="invalid-feedback">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        {% else %}
+            {% if input.data %}
+                {% render_field input class="form-control is-valid" %}
+            {% else %}
+                {% render_field input class="form-control" placeholder=input.label %}
+            {% endif %}
+        {% endif %}
+
+        {% if input.help_text and request.user.help_text %}
+            <small class="form-text text-muted">{{ input.help_text }}</small>
+        {% endif %}
+    </div>
+{% endif %}
+
+{% if request.user.form_display == 'compact' %}
+    <div class="input-group{% if not request.user.help_text or not input.help_text %} mb-3{% endif %}" id="input_{{ input.name }}">
+        <div class="input-group-prepend{% if is_required %} required{% endif %}">
+            <span class="input-group-text font-weight-bold" id="{{ input.auto_id }}">
+                {{ input.label|cut:":" }}
+            </span>
+        </div>
+
+        {% if input.errors %}
+            {% render_field input class="form-control is-invalid" placeholder=input.label %}
+
+            {% for error in input.errors %}
+                <div class="invalid-feedback">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        {% else %}
+            {% if input.data %}
+                {% render_field input class="form-control is-valid" %}
+            {% else %}
+                {% render_field input class="form-control" placeholder=input.label %}
+            {% endif %}
+        {% endif %}
+    </div>
+
+    {% if input.help_text and request.user.help_text %}
+        <small class="form-text text-muted mb-3">{{ input.help_text }}</small>
+    {% endif %}
+{% endif %}

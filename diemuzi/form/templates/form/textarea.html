@@ -1,0 +1,25 @@
+{% load widget_tweaks %}
+
+<div class="form-group{% if is_required %} required{% endif %}" id="textarea_{{ textarea.name }}">
+    {{ textarea|add_label_class:'font-weight-bold'|cut:":" }}
+
+    {% if textarea.errors %}
+        {% render_field textarea class="form-control is-invalid" %}
+
+        {% for error in textarea.errors %}
+            <div class="invalid-feedback">
+                {{ error }}
+            </div>
+        {% endfor %}
+    {% else %}
+        {% if textarea.data %}
+            {% render_field textarea class="form-control is-valid" %}
+        {% else %}
+            {% render_field textarea class="form-control" placeholder=textarea.label %}
+        {% endif %}
+    {% endif %}
+
+    {% if textarea.help_text %}
+        <small class="form-text text-muted help-text">{{ textarea.help_text }}</small>
+    {% endif %}
+</div>

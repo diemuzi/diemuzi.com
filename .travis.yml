@@ -1,0 +1,15 @@
+dist: xenial
+
+language: python
+
+python:
+  - "3.8"
+
+install:
+  - pip install -r requirements/dev.txt
+
+script:
+  - coverage run --source='.' diemuzi/manage.py test
+
+after_success:
+  - coveralls

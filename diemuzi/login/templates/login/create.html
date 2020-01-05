@@ -1,0 +1,30 @@
+{% extends 'asset/layout.html' %}
+
+{% load i18n %}
+
+{% block title %} : {% trans 'Create Account' %}{% endblock %}
+
+{% block content %}
+
+    <form action="{% url 'login:create' %}" method="post" novalidate>
+
+        {% csrf_token %}
+
+        <div class="card border-dark col-lg-4 m-auto">
+            <div class="card-body">
+                <div class="p-2">
+                    {% include 'form/input.html' with input=form.first_name is_required=True %}
+                    {% include 'form/input.html' with input=form.last_name is_required=True %}
+                    {% include 'form/input.html' with input=form.email is_required=True %}
+                    {% include 'form/input.html' with input=form.username is_required=True %}
+
+                    <button type="submit" class="btn btn-outline-secondary">
+                        {% trans 'Create' %}
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+{% endblock %}

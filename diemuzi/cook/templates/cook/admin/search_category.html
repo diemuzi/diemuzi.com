@@ -1,0 +1,88 @@
+{% extends 'member/layout.html' %}
+
+{% load compress %}
+
+{% load form_dialog %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% block breadcrumbs %}
+    {% include 'cook/admin/breadcrumbs.html' %}
+{% endblock %}
+
+{% block js %}
+    {% compress js %}
+        <script src="{% static 'form/js/modal.js' %}"></script>
+    {% endcompress %}
+{% endblock %}
+
+{% block title %} : {% trans 'Cooking Admin' %} : {% trans 'Search Categories' %}{% endblock %}
+
+{% block content %}
+
+    <button type="button" class="btn btn-secondary mb-3 bg-white text-dark" data-toggle="modal"
+            data-target="#searchModal"><i class="fas fa-search"></i> {% trans 'Search' %}
+    </button>
+
+    {% if perms.cook.add_category %}
+        <a href="{% url 'cook:admin-add-category' %}" class="btn btn-outline-secondary mb-3 bg-white text-dark" role="button"
+           aria-pressed="true"><i class="fas fa-plus-circle"></i> {% trans 'Create Category' %}</a>
+    {% endif %}
+
+    <table class="table table-striped table-bordered table-light table-hover" id="search">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+
+            <th scope="col">{% trans 'Name' %}</th>
+
+            {% if perms.cook.delete_category %}
+                <th scope="col" class="text-center">{% trans 'Delete' %}</th>
+            {% endif %}
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for item in object_list %}
+            <tr>
+                <th scope="row">{{ item.pk|escape }}</th>
+
+                <td class="w-100">{{ item|escape }}</td>
+
+                {% if perms.cook.delete_category %}
+                    <td class="text-center">
+                        <button class="btn btn-danger btn-xs btn-delete"
+                                data-title="{% trans 'Delete' %}"
+                                data-url="{% url 'cook:admin-delete-category' item.pk %}"
+                                id="{{ item.pk }}">
+
+                            <i class="fas fa-trash-alt" aria-hidden="true"></i>
+                        </button>
+                    </td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Start Pagination -->
+    {% include 'form/search/pagination.html' %}
+    <!-- End Pagination -->
+
+    <!-- Start Search Modal -->
+    <form action="{% url 'cook:admin-search-category' %}" novalidate id="search_modal">
+        {% include 'form/search/modal.html' %}
+    </form>
+    <!-- End Search Modal -->
+
+    {% if perms.cook.delete_category %}
+        <form action="#" method="post" id="modal_url_delete">
+            {% csrf_token %}
+
+            {% form_dialog _('Continuing will remove this cooking category.') 'delete' %}
+        </form>
+    {% endif %}
+
+{% endblock content %}
