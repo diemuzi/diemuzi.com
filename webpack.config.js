@@ -1,5 +1,4 @@
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const RemovePlugin = require('remove-files-webpack-plugin');
@@ -18,21 +17,12 @@ module.exports = {
             'bootstrap',
             '@fortawesome/fontawesome-free',
             'blockui-npm',
-            'pwstrength-bootstrap',
-            'datatables.net-bs4',
-            'datatables.net-buttons-bs4',
-            'datatables.net-responsive-bs4',
-            'datatables.net-scroller-bs4',
-            'datatables.net-select-bs4'
+            'multiselect'
         ],
         'vendor-css': [
             'bootstrap/dist/css/bootstrap.css',
             '@fortawesome/fontawesome-free/css/all.css',
-            'datatables.net-bs4/css/dataTables.bootstrap4.css',
-            'datatables.net-buttons-bs4/css/buttons.bootstrap4.css',
-            'datatables.net-responsive-bs4/css/responsive.bootstrap4.css',
-            'datatables.net-scroller-bs4/css/scroller.bootstrap4.css',
-            'datatables.net-select-bs4/css/select.bootstrap4.css'
+            'multiselect/css/multi-select.css'
         ]
     },
     mode: 'production',
@@ -126,13 +116,6 @@ module.exports = {
             //cleanAfterEveryBuildPatterns: ['**/*', '../*'],
             dangerouslyAllowCleanPatternsOutsideProject: true
         }),
-        new CopyWebpackPlugin([
-            {
-                from: '@ckeditor/ckeditor5-build-classic/build/ckeditor.js',
-                to: path.resolve(__dirname, 'diemuzi/static/webpack'),
-                context: 'node_modules'
-            }
-        ]),
         new MiniCssExtractPlugin({
             filename: '[name].css',
             chunkFilename: '[name].chunk.css'
@@ -147,8 +130,7 @@ module.exports = {
     ],
     resolve: {
         alias: {
-            'jquery': 'jquery/src/jquery',
-            'pwstrength-bootstrap': 'pwstrength-bootstrap/dist/pwstrength-bootstrap'
+            'jquery': 'jquery/src/jquery'
         }
     }
 };
