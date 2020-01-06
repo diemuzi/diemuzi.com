@@ -8,7 +8,17 @@ class FormContact(forms.ModelForm):
         model = models.Contact
 
         fields = [
-            'name',
             'email',
-            'message'
+            'message',
+            'name'
+        ]
+
+
+class FormSearch(forms.ModelForm):
+    class Meta:
+        model = models.Contact
+
+        fields = [
+            'name',
+            'email'
         ]

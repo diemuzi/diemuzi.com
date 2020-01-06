@@ -1,0 +1,32 @@
+{% load i18n %}
+
+<li class="breadcrumb-item dropdown">
+    <i class="fas fa-envelope"></i>
+
+    <a href="#" id="breadcrumbMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+       class="dropdown-toggle">{% trans 'Contact Us' %}</a>
+
+    <div class="dropdown-menu" aria-labelledby="breadcrumbMenuLink">
+        {% if perms.contact.view_contact %}
+            {% if pk is not None %}
+                <a class="dropdown-item" href="{% url 'contact:read' pk %}">
+                    <i class="fas fa-envelope-open"></i> {% trans 'Read' %}
+                </a>
+            {% endif %}
+
+            <a class="dropdown-item" href="{% url 'contact:search' %}">
+                <i class="fas fa-search"></i> {% trans 'Search' %}
+            </a>
+        {% endif %}
+    </div>
+</li>
+
+<li class="breadcrumb-item" id="breadcrumbTitle">
+    {% if request.resolver_match.url_name == 'read' %}
+        <i class="fas fa-envelope-open"></i> {% trans 'Read' %}
+    {% endif %}
+
+    {% if request.resolver_match.url_name == 'search' %}
+        <i class="fas fa-search"></i> {% trans 'Search' %}
+    {% endif %}
+</li>

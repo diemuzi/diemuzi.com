@@ -1,0 +1,37 @@
+{% extends 'member/layout.html' %}
+
+{% load i18n %}
+
+{% block breadcrumbs %}
+    {% include 'contact/breadcrumbs.html' %}
+{% endblock %}
+
+{% block title %} : {% trans 'Contact Us' %} : {% trans 'Read' %}{% endblock %}
+
+{% block content %}
+
+    <div class="card border-dark">
+        <div class="card-body">
+            <div class="p-2">
+                <h6 class="font-weight-bold">{% trans 'Created Date' %}</h6>
+                {{ object.date_from|date:request.user.time_format }}
+            </div>
+
+            <div class="p-2">
+                <h6 class="font-weight-bold">{% trans 'Name' %}</h6>
+                {{ object|escape }}
+            </div>
+
+            <div class="p-2">
+                <h6 class="font-weight-bold">{% trans 'Email Address' %}</h6>
+                {{ object.email|escape }}
+            </div>
+
+            <div class="p-2">
+                <h6 class="font-weight-bold">{% trans 'Message' %}</h6>
+                {{ object.message|escape }}
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

@@ -125,15 +125,36 @@
             <!-- End Photo -->
         {% endif %}
 
-        {% if user.is_superuser %}
-            <!-- Start User -->
+        {% if perms.contact.view_contact %}
+            <!-- Start Notifications -->
             <div class="card rounded-0 border-right-0">
                 <div class="card-header btn text-left" id="headingSideBarFive" data-toggle="collapse"
                      data-target="#collapseSideBarFive" aria-expanded="false" aria-controls="collapseSideBarFive">
-                    <i class="fas fa-user-cog"></i> {% trans 'User Admin' %}
+                    <i class="fas fa-envelope"></i> {% trans 'Notifications' %}
                 </div>
 
                 <div id="collapseSideBarFive" class="collapse" aria-labelledby="headingSideBarFive"
+                     data-parent="#accordionSideBar">
+
+                    <div class="list-group list-group-flush border-top">
+                        <a href="{% url 'contact:search' %}" class="list-group-item list-group-item-action">
+                            &raquo; {% trans 'Search' %}
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- End Notifications -->
+        {% endif %}
+
+        {% if user.is_superuser %}
+            <!-- Start User -->
+            <div class="card rounded-0 border-right-0">
+                <div class="card-header btn text-left" id="headingSideBarSix" data-toggle="collapse"
+                     data-target="#collapseSideBarSix" aria-expanded="false" aria-controls="collapseSideBarSix">
+                    <i class="fas fa-user-cog"></i> {% trans 'User Admin' %}
+                </div>
+
+                <div id="collapseSideBarSix" class="collapse" aria-labelledby="headingSideBarSix"
                      data-parent="#accordionSideBar">
 
                     <div class="list-group list-group-flush border-top">

@@ -4,6 +4,11 @@ from django.utils.translation import gettext_lazy as _
 
 
 class Contact(models.Model):
+    date_from = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name=_('Created On')
+    )
+
     email = models.EmailField(
         validators=[
             validators.MinLengthValidator(5),
@@ -32,4 +37,25 @@ class Contact(models.Model):
     class Meta:
         db_table = 'contact'
 
-        default_permissions = ()
+        default_permissions = ('view', 'delete')
+
+    def __str__(self):
+        return self.name
+
+    @staticmethod
+    def search(**kwargs):
+        search_params = {
+            'name': 'icontains',
+            'email': 'icontains'
+        }
+
+        query = {}
+
+        for key, value in kwargs.items():
+            if value is None:
+                del kwargs[key]
+
+            if key in search_params:
+                query[key + '__' + search_params[key]] = kwargs[key]
+
+        return Contact.objects.filter(**query)
