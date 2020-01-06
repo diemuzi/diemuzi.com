@@ -1,8 +1,8 @@
 import socket
 
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import models as auth_models
-from django.db.models import Q
 from django.utils.translation import activate
 from django.utils.translation import gettext as _
 from ipware.ip import get_ip
@@ -13,11 +13,14 @@ from login import models
 def create_group_permissions(sender, **kwargs):
     group, created = auth_models.Group.objects.get_or_create(name='Client')
 
-    permissions = auth_models.Permission.objects.filter(
-        Q(content_type__app_label='login') | Q(content_type__model='comment'))
+    for item in settings.GROUP_PERMISSIONS:
+        perm = item.split('.')
 
-    for item in permissions:
-        group.permissions.add(item.pk)
+        permission = auth_models.Permission.objects.exclude(
+            content_type__app_label__in=settings.EXCLUDE_GROUP_APPS).get(content_type__app_label=perm[0],
+                                                                         codename=perm[1])
+
+        group.permissions.add(permission.pk)
 
 
 def handle_login(sender, request, user, **kwargs):

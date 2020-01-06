@@ -23,5 +23,16 @@ urlpatterns = [
 
     path('password', views.Password.as_view(), name='password'),
 
-    path('profile', views.Profile.as_view(), name='profile')
+    path('permission/<int:pk>', views.Permission.as_view(), name='permission'),
+
+    path('profile', views.Profile.as_view(), name='profile'),
+
+    path('profile/<int:pk>', views.ProfileManage.as_view(), name='profile-manage'),
+
+    re_path(r'^search'
+            r'(?:/first_name/(?P<first_name>[\s\w\'-]+))?'
+            r'(?:/last_name/(?P<last_name>[\s\w\'-]+))?'
+            r'(?:/email/(?P<email>[\d\w.@-_]+))?'
+            r'$',
+            views.Search.as_view(), name='search')
 ]

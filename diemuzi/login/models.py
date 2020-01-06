@@ -258,8 +258,12 @@ class Account(auth_models.AbstractBaseUser, auth_models.PermissionsMixin):
         db_table = 'account'
 
         permissions = [
+            ('change_manage', 'Can change manage'),
             ('change_password', 'Can change password'),
-            ('view_password', 'Can view password')
+            ('change_permission', 'Can change permissions'),
+            ('view_manage', 'Can view manage'),
+            ('view_password', 'Can view password'),
+            ('view_permission', 'Can view permissions')
         ]
 
     def __str__(self):
@@ -275,3 +279,22 @@ class Account(auth_models.AbstractBaseUser, auth_models.PermissionsMixin):
 
         group = auth_models.Group.objects.get(name='Client')
         group.user_set.add(user)
+
+    @staticmethod
+    def search(**kwargs):
+        search_params = {
+            'first_name': 'icontains',
+            'last_name': 'icontains',
+            'email': 'icontains'
+        }
+
+        query = {}
+
+        for key, value in kwargs.items():
+            if value is None:
+                del kwargs[key]
+
+            if key in search_params:
+                query[key + '__' + search_params[key]] = kwargs[key]
+
+        return Account.objects.filter(is_superuser=False, **query)

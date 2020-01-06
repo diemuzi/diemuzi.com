@@ -1,0 +1,89 @@
+{% extends 'member/layout.html' %}
+
+{% load compress %}
+
+{% load form_dialog %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% block breadcrumbs %}
+    {% include 'login/breadcrumbs.html' %}
+{% endblock %}
+
+{% block js %}
+    {% compress js %}
+        <script src="{% static 'form/js/modal.js' %}"></script>
+    {% endcompress %}
+{% endblock %}
+
+{% block content %}
+
+    <button type="button" class="btn btn-secondary mb-3 bg-white text-dark" data-toggle="modal"
+            data-target="#searchModal"><i class="fas fa-search"></i> {% trans 'Search' %}
+    </button>
+
+    <table class="table table-striped table-bordered table-light table-hover" id="search">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+
+            <th scope="col">{% trans 'Name' %}</th>
+
+            <th scope="col">{% trans 'Status' %}</th>
+
+            {% if perms.login.view_manage %}
+                <th scope="col" class="text-center">{{ _('Profile') }}</th>
+            {% endif %}
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for item in object_list %}
+            <tr>
+                <th scope="row">{{ item.pk|escape }}</th>
+
+                <td class="w-100">
+                    {{ item|escape }}
+
+                    <div class="small">{{ item.email|escape }}</div>
+                </td>
+
+                <td>{{ item.is_active|yesno:_('Enabled, Disabled') }}</td>
+
+                {% if perms.login.view_manage %}
+                    <td class="text-center">
+                        <a href="{% url 'login:profile-manage' item.pk %}" class="nounderline">
+                            <button class="btn btn-primary btn-xs"
+                                    data-title="{{ _('Edit') }}">
+
+                                <i class="fas fa-pencil-alt" aria-hidden="true"></i>
+                            </button>
+                        </a>
+                    </td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Start Pagination -->
+    {% include 'form/search/pagination.html' %}
+    <!-- End Pagination -->
+
+    <!-- Start Search Modal -->
+    <form action="{% url 'login:search' %}" novalidate id="search_modal">
+        {% include 'form/search/modal.html' %}
+    </form>
+    <!-- End Search Modal -->
+
+    {% if perms.login.delete_account %}
+        <form action="#" method="post" id="modal_url_delete">
+            {% csrf_token %}
+
+            {% form_dialog _('Continuing will remove this employee.') 'delete' %}
+        </form>
+    {% endif %}
+
+{% endblock content %}

@@ -86,7 +86,33 @@ class Password(GaclMixin, SuccessMessageMixin, PasswordChangeView):
 
     success_url = reverse_lazy('login:password')
 
-    success_message = _('Updated Account Password.')
+    success_message = _('Updated account password.')
+
+
+class Permission(GaclMixin, SuccessMessageMixin, generic.UpdateView):
+    permission_required = (
+        'login.view_permission',
+        'login.change_permission'
+    )
+
+    model = models.Account
+
+    form_class = forms.FormPermission
+
+    template_name = 'login/permission.html'
+
+    success_message = _('Updated user permissions.')
+
+    def get_form_kwargs(self):
+        kwargs = super(Permission, self).get_form_kwargs()
+
+        kwargs['group_perm'] = self.get_object().get_group_permissions()
+        kwargs['user_perm'] = self.get_object().get_user_permissions()
+
+        return kwargs
+
+    def get_success_url(self):
+        return reverse_lazy('login:permission', kwargs={'pk': self.kwargs['pk']})
 
 
 class Profile(GaclMixin, SuccessMessageMixin, generic.UpdateView):
@@ -102,7 +128,42 @@ class Profile(GaclMixin, SuccessMessageMixin, generic.UpdateView):
 
     success_url = reverse_lazy('login:profile')
 
-    success_message = _('Updated Account Profile.')
+    success_message = _('Updated account profile.')
 
     def get_object(self, queryset=None):
         return get_object_or_404(models.Account, pk=self.request.user.id)
+
+
+class ProfileManage(GaclMixin, SuccessMessageMixin, generic.UpdateView):
+    permission_required = (
+        'login.view_manage'
+    )
+
+    form_class = forms.FormProfileManage
+
+    template_name = 'login/profile_manage.html'
+
+    success_message = _('Updated user profile.')
+
+    def get_object(self, queryset=None):
+        return models.Account.objects.get(pk=self.kwargs['pk'])
+
+    def get_success_url(self):
+        return reverse_lazy('login:profile-manage', kwargs={'pk': self.kwargs['pk']})
+
+
+class Search(GaclMixin, SearchMixin, generic.ListView):
+    permission_required = (
+        'login.view_manage'
+    )
+
+    form_class = forms.FormSearch
+
+    template_name = 'login/search.html'
+
+    ordering = ('last_name', 'first_name')
+
+    paginate_by = 10
+
+    def get_queryset(self):
+        return models.Account.search(**self.kwargs)

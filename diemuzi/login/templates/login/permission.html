@@ -1,0 +1,51 @@
+{% extends 'member/layout.html' %}
+
+{% load i18n %}
+
+{% block breadcrumbs %}
+    {% include 'login/breadcrumbs.html' %}
+{% endblock %}
+
+{% block js %}
+    <script>
+        $('#id_permission').multiSelect({
+            cssClass: 'w-100'
+        });
+    </script>
+{% endblock %}
+
+{% block title %} : {% trans 'Members Area' %} : {% trans 'Permissions' %}{% endblock %}
+
+{% block content %}
+
+    <form action="{% url 'login:permission' object.pk %}" method="post" novalidate>
+
+        {% csrf_token %}
+
+        <div class="card border-dark">
+            <div class="card-body">
+                <div class="p-2">
+                    <h6 class="font-weight-bold">{% trans 'Account ID' %}</h6>
+                    {{ object.pk|escape }}
+                </div>
+
+                <div class="p-2">
+                    <h6 class="font-weight-bold">{% trans 'Email Address' %}</h6>
+                    {{ object.email|escape }}
+                </div>
+
+                <div class="p-2">
+                    {% include 'form/select.html' with select=form.default %}
+                    {% include 'form/select.html' with select=form.permission %}
+
+                    {% if perms.login.change_permission %}
+                        <button type="submit" class="btn btn-outline-secondary">
+                            {% trans 'Update' %}
+                        </button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </form>
+
+{% endblock content %}

@@ -24,6 +24,12 @@
                 <i class="fas fa-pencil-alt"></i> {% trans 'Profile' %}
             </a>
         {% endif %}
+
+        {% if perms.login.view_manage %}
+            <a class="dropdown-item" href="{% url 'login:search' %}">
+                <i class="fas fa-search"></i> {% trans 'Search' %}
+            </a>
+        {% endif %}
     </div>
 </li>
 
@@ -40,7 +46,19 @@
         <i class="fas fa-key"></i> {% trans 'Change Password' %}
     {% endif %}
 
+    {% if request.resolver_match.url_name == 'permission' %}
+        <i class="fas fa-user-shield"></i> {% trans 'Permissions' %}
+    {% endif %}
+
     {% if request.resolver_match.url_name == 'profile' %}
         <i class="fas fa-pencil-alt"></i> {% trans 'Profile' %}
+    {% endif %}
+
+    {% if request.resolver_match.url_name == 'profile-manage' %}
+        <i class="fas fa-pencil-alt"></i> {% trans 'Profile - Manage' %}
+    {% endif %}
+
+    {% if request.resolver_match.url_name == 'search' %}
+        <i class="fas fa-search"></i> {% trans 'Search' %}
     {% endif %}
 </li>

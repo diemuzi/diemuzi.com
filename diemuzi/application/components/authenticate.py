@@ -45,3 +45,31 @@ LOGIN_REDIRECT_URL = '/'
 # Logout / Redirect URL's
 LOGOUT_URL = '/login/logout'
 LOGOUT_REDIRECT_URL = LOGIN_URL
+
+# Exclude Group Permissions from apps
+EXCLUDE_GROUP_APPS = [
+    'auth',
+    'contenttypes',
+    'django_celery_results',
+    'database',
+    'sessions',
+    'sites'
+]
+
+# Default Group Permissions
+GROUP_PERMISSIONS = [
+    'blog.add_comment',
+    'blog.change_comment',
+    'blog.delete_comment',
+    'blog.view_comment',
+    'cook.add_comment',
+    'cook.change_comment',
+    'cook.delete_comment',
+    'cook.view_comment',
+    'login.change_account',
+    'login.change_password',
+    'login.delete_account',
+    'login.view_accesslog',
+    'login.view_account',
+    'login.view_password'
+]
