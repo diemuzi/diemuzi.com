@@ -19,7 +19,7 @@ class StaticSitemap(sitemaps.Sitemap):
         return reverse(item)
 
 
-class DynamicSitemapRead(sitemaps.Sitemap):
+class DynamicSitemap(sitemaps.Sitemap):
     priority = 0.5
     changefreq = 'daily'
     protocol = 'https'
