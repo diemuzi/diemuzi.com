@@ -20,7 +20,7 @@ sitemaps = {
     'blog-dynamic-category': blog_sitemaps.DynamicSitemapCategory,
     'contact-static': contact_sitemaps.StaticSitemap,
     'cook-static': cook_sitemaps.StaticSitemap,
-    'cook-dynamic-read': cook_sitemaps.DynamicSitemapRead,
+    'cook-dynamic': cook_sitemaps.DynamicSitemap,
     'cook-dynamic-category': cook_sitemaps.DynamicSitemapCategory,
     'home-static': home_sitemaps.StaticSitemap
 }
