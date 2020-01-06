@@ -68,7 +68,7 @@ class Category(models.Model):
         :return: list
         """
 
-        return Category.objects.values('name', 'slug').annotate(count=models.Count('pk'))
+        return Cook.objects.values('category__name', 'category__slug').annotate(count=models.Count('pk'))
 
     @staticmethod
     def choices():
