@@ -1,0 +1,51 @@
+{% extends 'member/layout.html' %}
+
+{% load compress %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% block breadcrumbs %}
+    {% include 'photo/admin/breadcrumbs.html' %}
+{% endblock %}
+
+{% block js %}
+    {% if not perms.photo.add_photo %}
+        {% compress js %}
+            <script src="{% static 'form/js/disableForm.js' %}"></script>
+        {% endcompress %}
+    {% endif %}
+{% endblock %}
+
+{% block title %} : {% trans 'Photography Admin' %} : {% trans 'Create Recipe' %}{% endblock %}
+
+{% block content %}
+
+    <form action="{% url 'photo:admin-add' %}" method="post" enctype="multipart/form-data" novalidate>
+
+        {% csrf_token %}
+
+        {% include 'form/hidden.html' with hidden=form.account value=user.id %}
+
+        <div class="card border-dark">
+            <div class="card-body">
+                <div class="p-2">
+                    {% include 'form/input.html' with input=form.name is_required=True %}
+                    {% include 'form/select.html' with select=form.album is_required=True %}
+                    {% include 'form/input.html' with input=form.image is_required=True %}
+                    {% include 'form/textarea.html' with textarea=form.description is_required=True %}
+                    {% include 'form/switch.html' with switch=form.is_featured %}
+
+                    {% if perms.photo.add_photo %}
+                        <button type="submit" class="btn btn-outline-secondary">
+                            {% trans 'Create' %}
+                        </button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+{% endblock %}

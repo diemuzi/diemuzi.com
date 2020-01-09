@@ -1,0 +1,49 @@
+{% extends 'asset/layout.html' %}
+
+{% load compress %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% block js %}
+    {% compress js %}
+        <script src="{% static 'form/js/modal.js' %}"></script>
+    {% endcompress %}
+{% endblock %}
+
+{% block title %} : {% trans 'Photography' %} : {% trans 'Search' %}{% endblock %}
+
+{% block content %}
+
+    <!-- Start Filter -->
+    {% include 'photo/filter.html' %}
+    <!-- End Filter -->
+
+    <div class="row">
+        {% for item in object_list %}
+            <!-- Start Album -->
+            <div class="col-lg-4 col-md-12 mb-4 text-center">
+                <!-- Start Album Image -->
+                <img class="img-fluid" src="{{ item.image.url }}" alt="{{ item.image.name }}">
+                <!-- End Album Image -->
+
+                <!-- Start Album Description -->
+                <div class="text-center">{{ item|escape }}</div>
+                <!-- End Album Description -->
+            </div>
+            <!-- End Album -->
+        {% empty %}
+            <div class="card mx-auto border border-danger">
+                <div class="card-body">
+                    {% blocktrans %}There are currently no photographs to display.{% endblocktrans %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- Start Pagination -->
+    {% include 'form/search/pagination.html' %}
+    <!-- End Pagination -->
+
+{% endblock %}

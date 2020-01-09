@@ -114,9 +114,16 @@
                      data-parent="#accordionSideBar">
 
                     <div class="list-group list-group-flush border-top">
-                        {% if perms.login.view_accesslog %}
-                            <a href="#" class="list-group-item list-group-item-action" aria-disabled="true">
-                                &raquo; {% trans 'Coming Soon' %}
+                        {% if perms.photo.view_album %}
+                            <a href="{% url 'photo:admin-search-album' %}"
+                               class="list-group-item list-group-item-action">
+                                &raquo; {% trans 'Albums' %}
+                            </a>
+                        {% endif %}
+
+                        {% if perms.photo.view_photo %}
+                            <a href="{% url 'photo:admin-search' %}" class="list-group-item list-group-item-action">
+                                &raquo; {% trans 'Search' %}
                             </a>
                         {% endif %}
                     </div>

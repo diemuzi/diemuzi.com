@@ -11,6 +11,7 @@ from blog import sitemaps as blog_sitemaps
 from contact import sitemaps as contact_sitemaps
 from cook import sitemaps as cook_sitemaps
 from home import sitemaps as home_sitemaps
+from photo import sitemaps as photo_sitemaps
 
 # Sitemaps
 sitemaps = {
@@ -22,7 +23,10 @@ sitemaps = {
     'cook-static': cook_sitemaps.StaticSitemap,
     'cook-dynamic': cook_sitemaps.DynamicSitemap,
     'cook-dynamic-category': cook_sitemaps.DynamicSitemapCategory,
-    'home-static': home_sitemaps.StaticSitemap
+    'home-static': home_sitemaps.StaticSitemap,
+    'photo-static': photo_sitemaps.StaticSitemap,
+    'photo-dynamic': photo_sitemaps.DynamicSitemap,
+    'photo-dynamic-album': photo_sitemaps.DynamicSitemapAlbum
 }
 
 # URL Patterns

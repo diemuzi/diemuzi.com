@@ -1,0 +1,113 @@
+{% extends 'asset/layout.html' %}
+
+{% load compress %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% load template_isimage %}
+
+{% block js %}
+    {% compress js %}
+        <script src="{% static 'form/js/modal.js' %}"></script>
+    {% endcompress %}
+{% endblock %}
+
+{% block title %} : {% trans 'Photography' %} : {% trans 'Search' %}{% endblock %}
+
+{% block content %}
+
+    <!-- Start Filter -->
+    {% include 'photo/filter.html' %}
+    <!-- End Filter -->
+
+    <div class="row">
+        {% for item in object_list %}
+            {% if item.photos|length > 0 %}
+                <!-- Start Album -->
+                <div class="col-lg-4 col-md-12 mb-4 text-center">
+                    <div class="modal fade" id="modal{{ forloop.counter }}" tabindex="-1" role="dialog"
+                         aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div id="carouselCaptions{{ forloop.counter }}" class="carousel slide"
+                                     data-ride="carousel" data-interval="false">
+                                    <ol class="carousel-indicators">
+                                        {% for photo in item.photos %}
+                                            <li data-target="#carouselCaptions{{ forloop.counter }}"
+                                                data-slide-to="{{ forloop.counter0 }}"
+                                                {% if forloop.first %}class="active"{% endif %}></li>
+                                        {% endfor %}
+                                    </ol>
+
+                                    <div class="carousel-inner">
+                                        {% for photo in item.photos %}
+                                            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                                <img src="{{ photo.image.url }}"
+                                                     class="d-block w-100" alt="{{ photo.image.name }}">
+                                                <div class="carousel-caption d-none d-md-block">
+                                                    <h5>{{ photo.name|escape }}</h5>
+
+                                                    <p>{{ photo.description|escape }}</p>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer justify-content-between">
+                                    <a href="#carouselCaptions{{ forloop.counter }}" role="button" data-slide="prev">
+                                        <i class="fas fa-chevron-left fa-3x text-dark float-left"></i>
+
+                                        <span class="sr-only">{% trans 'Previous' %}</span>
+                                    </a>
+
+                                    <button type="button" class="btn btn-outline-dark btn-rounded btn-md ml-4"
+                                            data-dismiss="modal">{% trans 'Close' %}
+                                    </button>
+
+                                    <a href="#carouselCaptions{{ forloop.counter }}" role="button" data-slide="next">
+                                        <i class="fas fa-chevron-right fa-3x text-dark"></i>
+
+                                        <span class="sr-only">{% trans 'Next' %}</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Start Album Image -->
+                    <a href="#" aria-disabled="true">
+                        {% if item.featured.image|template_isimage %}
+                            <img class="img-fluid img-thumbnail" src="{{ item.featured.image.url }}"
+                                 alt="{{ item.featured.image.name }}" data-toggle="modal"
+                                 data-target="#modal{{ forloop.counter }}" style="max-width: 450px; max-height: 450px;">
+                        {% else %}
+                            <img class="img-fluid img-thumbnail" src="https://placehold.it/450x250?text=Coming+Soon"
+                                 alt="{% trans 'Coming Soon' %}" data-toggle="modal"
+                                 data-target="#modal{{ forloop.counter }}" style="max-width: 450px; max-height: 450px;">
+                        {% endif %}
+                    </a>
+                    <!-- End Album Image -->
+
+                    <!-- Start Album Description -->
+                    <div class="text-center">{{ item|escape }}</div>
+                    <!-- End Album Description -->
+                </div>
+                <!-- End Album -->
+            {% endif %}
+        {% empty %}
+            <div class="card mx-auto border border-danger">
+                <div class="card-body">
+                    {% blocktrans %}There are currently no albums to display.{% endblocktrans %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- Start Pagination -->
+    {% include 'form/search/pagination.html' %}
+    <!-- End Pagination -->
+
+{% endblock %}

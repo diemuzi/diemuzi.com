@@ -1,0 +1,60 @@
+{% load i18n %}
+
+<li class="breadcrumb-item dropdown">
+    <i class="fas fa-photo-video"></i>
+
+    <a href="#" id="breadcrumbMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+       class="dropdown-toggle">{% trans 'Photography Admin' %}</a>
+
+    <div class="dropdown-menu" aria-labelledby="breadcrumbMenuLink">
+        {% if perms.photo.view_photo %}
+            {% if perms.photo.add_photo and request.resolver_match.url_name == 'admin-add' %}
+                <a class="dropdown-item" href="{% url 'photo:admin-add' %}">
+                    <i class="fas fa-plus-circle"></i> {% trans 'Create' %}
+                </a>
+            {% endif %}
+
+            {% if perms.photo.add_album and request.resolver_match.url_name == 'admin-add-album' %}
+                <a class="dropdown-item" href="{% url 'photo:admin-add-album' %}">
+                    <i class="fas fa-plus-circle"></i> {% trans 'Create Album' %}
+                </a>
+            {% endif %}
+
+            {% if pk is not None %}
+                <a class="dropdown-item" href="{% url 'photo:admin-profile' pk %}">
+                    <i class="fas fa-pencil-alt"></i> {% trans 'Profile' %}
+                </a>
+            {% endif %}
+
+            <a class="dropdown-item" href="{% url 'photo:admin-search' %}">
+                <i class="fas fa-search"></i> {% trans 'Search' %}
+            </a>
+
+            <a class="dropdown-item" href="{% url 'photo:admin-search-album' %}">
+                <i class="fas fa-search"></i> {% trans 'Search Categories' %}
+            </a>
+        {% endif %}
+    </div>
+</li>
+
+<li class="breadcrumb-item" id="breadcrumbTitle">
+    {% if request.resolver_match.url_name == 'admin-add' %}
+        <i class="fas fa-plus-circle"></i> {% trans 'Create' %}
+    {% endif %}
+
+    {% if request.resolver_match.url_name == 'admin-add-album' %}
+        <i class="fas fa-plus-circle"></i> {% trans 'Create Album' %}
+    {% endif %}
+
+    {% if request.resolver_match.url_name == 'admin-profile' %}
+        <i class="fas fa-pencil-alt"></i> {% trans 'Profile' %}
+    {% endif %}
+
+    {% if request.resolver_match.url_name == 'admin-search' %}
+        <i class="fas fa-search"></i> {% trans 'Search' %}
+    {% endif %}
+
+    {% if request.resolver_match.url_name == 'admin-search-album' %}
+        <i class="fas fa-search"></i> {% trans 'Search Categories' %}
+    {% endif %}
+</li>

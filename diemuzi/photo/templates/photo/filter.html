@@ -1,0 +1,26 @@
+{% load i18n %}
+
+{% block content %}
+
+    <div class="d-flex justify-content-center mb-4">
+        <div class="btn-group">
+            {% if request.resolver_match.url_name == 'search' %}
+                <a href="{% url 'photo:index' %}"
+                   class="btn btn-dark mr-2 rounded" role="button"
+                   aria-pressed="true"><i class="fas fa-home"></i> {% trans 'Home' %}</a>
+            {% endif %}
+
+            <button type="button" class="btn btn-dark mr-2 rounded" data-toggle="modal"
+                    data-target="#searchModal" aria-disabled="true">
+                <i class="fas fa-search"></i> {% trans 'Search' %}
+            </button>
+        </div>
+    </div>
+
+    <!-- Start Search Modal -->
+    <form action="{% url 'photo:search' %}" novalidate id="search_modal">
+        {% include 'form/search/modal.html' %}
+    </form>
+    <!-- End Search Modal -->
+
+{% endblock %}
