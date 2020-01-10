@@ -16,5 +16,5 @@ MIDDLEWARE = [
     # 'django.middleware.cache.FetchFromCacheMiddleware',
     'locality.middleware.TimezoneMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.common.BrokenLinkEmailsMiddleware'
+    # 'django.middleware.common.BrokenLinkEmailsMiddleware'
 ]
