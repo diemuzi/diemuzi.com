@@ -41,8 +41,8 @@
 
                         <div class="media-body">
                             <h6 class="mt-0 font-weight-bold">
-                                {% if item.show_name %}
-                                    {{ item.made_by.first_name|escape }} {{ item.made_by.last_name|escape }}
+                                {% if item.account.show_name %}
+                                    {{ item.account|escape }}
                                 {% else %}
                                     {% trans 'Anonymous Cat' %}
                                 {% endif %}
