@@ -68,7 +68,9 @@ class Category(models.Model):
         :return: list
         """
 
-        return Cook.objects.values('category__name', 'category__slug').annotate(count=models.Count('pk'))
+        return Cook.objects.select_related('category').prefetch_related('category').values('category__slug',
+                                                                                           'category__name').annotate(
+            count=models.Count('pk'))
 
     @staticmethod
     def choices():

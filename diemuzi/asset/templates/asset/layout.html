@@ -33,15 +33,11 @@
         <link rel="stylesheet"
               href="{% static 'webpack/vendor-css.css' %}"
               type="text/css">
-    {% endcompress %}
 
-    {% compress css %}
         <link rel="stylesheet"
               href="{% static 'asset/css/diemuzi.css' %}"
               type="text/css">
-    {% endcompress %}
 
-    {% compress css %}
         <link rel="stylesheet"
               href="{% static 'asset/css/bootstrap.css' %}"
               type="text/css">
@@ -104,19 +100,13 @@
 
 <!-- Start Default JS -->
 {% compress js %}
-    <script src="{% static 'webpack/vendor.js' %}"></script>
-{% endcompress %}
+    <script src="{% static 'webpack/vendor.js' %}" async></script>
 
-{% compress js %}
-    <script src="{% static 'asset/js/diemuzi.js' %}"></script>
-{% endcompress %}
+    <script src="{% static 'asset/js/diemuzi.js' %}" async></script>
 
-{% compress js %}
-    <script src="{% static 'form/js/blockui.js' %}"></script>
-{% endcompress %}
+    <script src="{% static 'form/js/blockui.js' %}" async></script>
 
-{% compress js %}
-    <script src="{% static 'comment/js/form.js' %}"></script>
+    <script src="{% static 'comment/js/form.js' %}" async></script>
 {% endcompress %}
 
 <script>
