@@ -31,8 +31,11 @@ sitemaps = {
 
 # URL Patterns
 urlpatterns = [
+    # ads.txt
+    path('ads.txt', generic.TemplateView.as_view(template_name='asset/random/ads.txt')),
+
     # robots.txt
-    path('robots.txt', generic.TemplateView.as_view(template_name='random/robots.txt')),
+    path('robots.txt', generic.TemplateView.as_view(template_name='asset/random/robots.txt')),
 
     # sitemap.xml
     path('sitemap.xml', views.index, {'sitemaps': sitemaps}, name='sitemap'),

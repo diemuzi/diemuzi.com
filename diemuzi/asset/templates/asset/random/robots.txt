@@ -1,1 +1,1 @@
-sitemap: http://diemuzi.com/sitemap.xml
+sitemap: https://local.diemuzi.com:8443/sitemap.xml
