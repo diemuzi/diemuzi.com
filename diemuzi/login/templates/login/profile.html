@@ -44,6 +44,7 @@
                             {% include 'form/input.html' with input=form.first_name is_required=True %}
                             {% include 'form/input.html' with input=form.last_name is_required=True %}
                             {% include 'form/input.html' with input=form.email is_required=True %}
+                            {% include 'form/switch.html' with switch=form.show_name %}
                         </div>
                     </div>
                 </div>

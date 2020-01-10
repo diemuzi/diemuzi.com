@@ -196,7 +196,7 @@ class Account(auth_models.AbstractBaseUser, auth_models.PermissionsMixin):
     is_staff = models.BooleanField(
         _('staff status'),
         default=False,
-        help_text=_('Designates whether the user can log into this admin site.'),
+        help_text=_('Designates whether the user can log into this admin site.')
     )
 
     is_active = models.BooleanField(
@@ -205,7 +205,7 @@ class Account(auth_models.AbstractBaseUser, auth_models.PermissionsMixin):
         help_text=_(
             'Designates whether this user should be treated as active. '
             'Unselect this instead of deleting accounts.'
-        ),
+        )
     )
 
     last_name = models.CharField(
@@ -227,6 +227,12 @@ class Account(auth_models.AbstractBaseUser, auth_models.PermissionsMixin):
         blank=False,
         null=False,
         help_text=_('Choose a default language.')
+    )
+
+    show_name = models.BooleanField(
+        default=True,
+        verbose_name=_('Show Name'),
+        help_text=_('Choose if your name should be shown after making a comment.')
     )
 
     time_format = models.CharField(

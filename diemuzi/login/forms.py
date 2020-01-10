@@ -116,6 +116,7 @@ class FormProfile(forms.ModelForm):
             'help_text',
             'last_name',
             'locale',
+            'show_name',
             'time_format',
             'time_zone'
         ]
@@ -134,6 +135,7 @@ class FormProfileManage(forms.ModelForm):
             'is_active',
             'last_name',
             'locale',
+            'show_name',
             'time_format',
             'time_zone'
         ]
