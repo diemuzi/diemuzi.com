@@ -53,7 +53,7 @@ class Blog(models.Model):
     name = models.CharField(
         max_length=255,
         validators=[
-            validators.RegexValidator('^[a-zA-Z .\'-]+$')
+            validators.RegexValidator('^[a-zA-Z0-9 .\'-]+$')
         ],
         verbose_name=_('Name'),
         blank=False,
